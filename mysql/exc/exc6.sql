@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS `world`.`code` (
     FOREIGN KEY (`codeGroup_seq`)
     REFERENCES `world`.`codeGroup` (`seq`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON UPDATE NO ACTION)namenamename
 ENGINE = InnoDB;
 
 
@@ -34,7 +34,7 @@ seq
 
 insert into code(
 
-code
+codecode
 ,name
 ,codeGroup_seq
 
