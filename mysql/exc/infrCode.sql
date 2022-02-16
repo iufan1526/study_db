@@ -1,4 +1,6 @@
-INSERT INTO `nct`.`infrCodeGroup`
+use nct;
+-- 코드그룹 및 코드 insert 
+iNSERT INTO `nct`.`infrCodeGroup`
 (
 `ifcgDelNy`,
 `regDate`,
@@ -16,11 +18,10 @@ now(),
 now(),
 now(),
 now(),
-"회원 보안질문",
+"옷 사이즈",
 1,
-13
+14
 );
-
 
 select
   ifcgSeq
@@ -47,43 +48,20 @@ INSERT INTO `nct`.`infrCode`
 `ifcdOrder`,
 `infrCodeGroup_ifcgSeq`
 )
-
 VALUES
  ( 0,
 now(),
 now(),
 now(),
 now(),
-"장래희망은?",
+"56",
 1,
-4,
-14
+12,
+17
 );
-select
-	ifcdSeq
-    ,infrCodeGroup_ifcgSeq
-    ,ifcdName
-    ,ifcdUseNy
-    ,ifcdOrder
-    ,ifcdDelNy
-    ,regDate
-    ,regDateTimeSvr
-    ,modDateTime
-    ,modDateTimeSvr
-from infrCode;
 
+-- 경계선------------------------------------
 
-select
-	a.ifcgSeq
-    ,a.ifcgName
-    ,b.ifcdSeq
-    ,b.ifcdName
-    ,b.ifcdOrder
-    from infrCodeGroup a
-		left join infrCode b on b.infrCodeGroup_ifcgSeq =a.ifcgSeq
-	order by a.ifcgSeq,b.ifcdOrder;
-    
-delete from infrCode where ifcdSeq = null;
 
 
 INSERT INTO `nct`.`infrNationality`
@@ -111,21 +89,213 @@ now(),
 1,
 2
 );
+select * from infrNationality;
 
-select
-	ifnaSeq
-    ,ifnaOrder
-    ,ifnaName
-    ,ifnaCode2Char
-    ,ifnaCode3Char
-    ,ifnaUseNy
-    ,ifnaDelNy
-    ,regDate
-    ,regDateTimeSvr
-    ,modDateTime
-    ,modDateTimeSvr
-from infrNationality;
+INSERT INTO `nct`.`infrMemberNationality`
 
+(
+`ifMnaDefultNy`,
+`ifmnaDelNy`,
+`regDate`,
+`regDateTimeSvr`,
+`modDateTime`,
+`modDateTimeSvr`,
+`ifmmSeq`,
+`ifnaSeq1`)
+VALUES
+(
+0,
+0,
+now(),
+now(),
+now(),
+now(),
+2,
+2);
+select * from infrMemberNationality;
+
+-- 데이터 입력
+INSERT INTO `nct`.`infrMemberQna`
+(
+`ifjqDelNy`,
+`regDate`,
+`regDateTimeSvr`,
+`modDateTime`,
+`modDateTimeSvr`,
+`ifjqQuestionCd`,
+`ifjqAnswer`,
+`ifjqbDelNy`,
+`ifmmSeq`)
+VALUES
+(
+0,
+now(),
+now(),
+now(),
+now(),
+48,
+"경찰",
+0,
+2
+)
+;
+select * from infrMemberAddress;
+
+INSERT INTO `nct`.`infrMemberAddress`
+(
+`ifmaDelNy`,
+`regDate`,
+`regDateTimeSvr`,
+`modDateTime`,
+`modDateTimeSvr`,
+`ifmaDefaultNy`,
+`ifmaTypeCd`,
+`ifmaTitle`,
+`ifmaAddress1`,
+`ifmaAddress2`,
+`ifmaZipcode`,
+`ifmmSeq`)
+VALUES
+(
+0,
+now(),
+now(),
+now(),
+now(),
+0,
+42,
+"관리자집",
+"서울특별시",
+"서초구",
+123123-12,
+2);
+
+select * from infrMemberHobby;
+
+INSERT INTO `nct`.`infrMemberHobby`
+(
+`ifhbDelNy`,
+`regDate`,
+`regDateTimeSvr`,
+`modDateTime`,
+`modDateTimeSvr`,
+`ifhbCd`,
+`ifmmSeq`,
+`ifhbOrder`,
+`ifhfUesNy`)
+VALUES
+(
+0,
+now(),
+now(),
+now(),
+now(),
+39,
+1,
+1,
+1);
+
+select * from infrMemberAddressOnline;
+INSERT INTO `nct`.`infrMemberAddressOnline`
+(
+`ifaoDelNy`,
+`regDate`,
+`regDateTimeSvr`,
+`modDateTime`,
+`modDateTimeSvr`,
+`ifaoTypeCd`,
+`ifaoDefaultNy`,
+`ifaoSnsTypeCd`,
+`ifaoUrl`,
+`ifaoTitle`,
+`ifmmSeq`)
+VALUES
+(
+0,
+now(),
+now(),
+now(),
+now(),
+33,
+1,
+35,
+"www.feacebook.com",
+"관리자 페이스북",
+2
+);
+
+select * from infrMemberPhone;
+INSERT INTO `nct`.`infrMemberPhone`
+(
+`ifmpDelNy`,
+`regDate`,
+`regDateTimeSvr`,
+`modDateTime`,
+`modDateTimeSvr`,
+`ifmpDefaultNy`,
+`ifmeTypeCd`,
+`ifmeDeviceCd`,
+`ifmeTelecomCd`,
+`ifmeNumber`,
+`ifmmSeq`)
+VALUES
+(
+0,
+now(),
+now(),
+now(),
+now(),
+1,
+20,
+24,
+27,
+"01080071525",
+2);
+
+select * from infrMemberEmail;
+
+
+INSERT INTO `nct`.`infrMemberEmail`
+(
+`regDate`,
+`regDateTimeSvr`,
+`modDateTime`,
+`modDateTimeSvr`,
+`ifmeDelNy`,
+`ifmeDefaultNy`,
+`ifmeTypeCd`,
+`ifmeEmailAcount`,
+`ifmeEmailDomainCd`,
+`ifmmSeq`)
+VALUES(
+now(),
+now(),
+now(),
+now(),
+0,
+0,
+14,
+"pdfa88211",
+18,
+2);
+
+
+select * from infrMemberEmail;
+-- --------------------------
+-- 코드그룹 코드테이블 조회
+select 
+a.ifcgSeq
+,a.ifcgName
+,b.ifcdSeq
+,b.ifcdName
+,b.ifcdOrder
+,b.ifcdUseNy
+,b.ifcdDelNy
+from infrCodeGroup a
+	left join infrCode b on b.infrCodeGroup_ifcgSeq = a.ifcgSeq
+order by 
+	a.ifcgSeq ,
+    b.ifcdOrder ;
 
 
 

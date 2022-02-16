@@ -27,21 +27,21 @@ INSERT INTO `nct`.`infrMember`
 `ifmmPushConsentNy`
 )
 VALUES(
+2,
+0,
+now(),
+now(),
+now(),
+now(),
 1,
 0,
-now(),
-now(),
-now(),
-now(),
-0,
-0,
-"김승태",
-"iufan1526",
+"관리자",
+"xadmin",
 "1232134",
 now(),
 3,
-"1997-11-19",
-12,
+"1980-01-01",
+11,
 6,
 null,
 0,
@@ -51,72 +51,71 @@ null,
 1,
 1
 );
-select * from infrCodeGroup;
+
 select * from infrMember;
-select * from infrCode;
-select
-	a.ifcdSeq
-    ,b.ifcgName
-    ,a.infrCodeGroup_ifcgSeq
-    ,a.ifcdName
-    ,a.ifcdUseNy
-    ,a.ifcdOrder
-from infrCode a
-	left join infrCodeGroup b on b.ifcgSeq = a.infrCodeGroup_ifcgSeq;
+
+
+select 
+	a.ifmmSeq
+    ,a.ifmmName
+    ,a.ifmmAdminNy
+    ,a.ifmmDormancyNy
+    ,a.ifmmDelNy
+    ,a.ifmmId
+    ,a.ifmmPassword
+	,a.ifmmPwdModDate
+    ,a.ifmmGenderCd
+    ,(select ifcdName from infrCode where ifcdSeq = a.ifmmGenderCd) as 성별
+    ,g.ifnaSeq1
+	,(select ifnaName from infrNationality where ifnaSeq = g.ifnaSeq1) as 국적
+    ,a.ifmmDob
+    ,a.ifmmSavedCd
+    ,(select ifcdName from infrCode where ifcdSeq = a.ifmmSavedCd) as 보관기간
+    ,a.ifmmMarriageCd
+    ,(select ifcdName from infrCode where ifcdSeq = a.ifmmMarriageCd) as 결혼여부 
+    ,a.ifmmChildrenNum
+    ,b.ifmaTypeCd
+    ,(select ifcdName from infrCode where ifcdSeq = b.ifmaTypeCd) as  주소용도
+    ,b.ifmaTitle
+    ,b.ifmaAddress1
+    ,b.ifmaAddress2
+    ,b.ifmaZipCode
+    ,c.ifaoTypeCd
+    ,(select ifcdName from infrCode where ifcdSeq = c.ifaoTypeCd) as 온라인용도
+    ,c.ifaoSnsTypeCd
+    ,(select ifcdName from infrCode where ifcdSeq = c.ifaoSnsTypeCd) as 온라인종류
+    ,c.ifaoTitle
+    ,c.ifaoUrl
+    ,d.ifmeTypeCd
+    ,(select ifcdName from infrCode where ifcdSeq = d.ifmeTypeCd) as 이메일용도
+    ,d.ifmeEmailAcount
+    ,d.ifmeEmailDomainCd
+    ,(select ifcdName from infrCode where ifcdSeq = d.ifmeEmailDomainCd) as 이메일도메인
+    ,e.ifjqQuestionCd
+    ,(select ifcdName from infrCode where ifcdSeq = e.ifjqQuestionCd) as 질문
+    ,e.ifjqAnswer
+    ,f.ifmeTypeCd
+    ,(select ifcdName from infrCode where ifcdSeq = f.ifmeTypeCd) as 번호타입
+    ,f.ifmeDeviceCd
+    ,(select ifcdName from infrCode where ifcdSeq =f.ifmeDeviceCd) as 디바이스종류
+    ,f.ifmeTelecomCd
+    ,(select ifcdName from infrCode where ifcdSeq = f.ifmeTelecomCd) as 통신사
+    ,concat(substring(f.ifmeNumber,1,3),"-",substring(f.ifmeNumber,4,4),"-",substring(f.ifmeNumber,7,4))
+from
+	infrMember a
+    left join infrMemberAddress b on b.ifmmSeq =a.ifmmSeq
+    left join infrMemberAddressOnline c on c.ifaoDelNy = 0 and c.ifaoDefaultNy and c.ifmmSeq = a.ifmmSeq
+	left join infrMemberEmail d on d.ifmmSeq = a.ifmmSeq
+    left join infrMemberQna e on e.ifmmSeq = a.ifmmSeq
+    left join infrMemberPhone f on f.ifmmSeq = a.ifmmSeq
+    left join infrMemberNationality g on g.ifmmSeq = a.ifmmSeq
+    where 1=1
+    and a.ifmmDelNy = 0;
+	;
     
+    select * from infrMemberQna;
 
-INSERT INTO `nct`.`infrMemberEmail`
-(
-`regDate`,
-`regDateTimeSvr`,
-`modDateTime`,
-`modDateTimeSvr`,
-`ifmeDelNy`,
-`ifmeDefaultNy`,
-`ifmeTypeCd`,
-`ifmeEmailAcount`,
-`ifmeEmailDomainCd`,
-`ifmmSeq`)
-VALUES(
-now(),
-now(),
-now(),
-now(),
-0,
-0,
-14,
-"iufan1526",
-17,
-1);
-select * from infrMemberEmail;
-select * from infrCodeGroup;
-select * from infrMember;
-select * from infrCode;
 
-select 
-	a.ifmmName,
-    b.ifmeTypeCd,
-	c.ifcdName,
-    b.ifmeEmailAcount,
-    b.ifmeEmailDomainCd,
-    c.ifcdName
-    from infrMember a
-		left join infrMemberEmail b on b.ifmmSeq  = a.ifmmSeq
-        left join infrCode c on c.ifcdSeq = b.ifmeTypeCd
-        left join infrCode c on c.ifcdSeq = b.ifmeEmailDomainCd;
         
-        
-select 
-a.ifcgSeq
-,a.ifcgName
-,b.ifcdSeq
-,b.ifcdName
-,b.ifcdOrder
-,b.ifcdUseNy
-,b.ifcdDelNy
-from infrCodeGroup a
-	left join infrCode b on b.infrCodeGroup_ifcgSeq = a.ifcgSeq
-order by 
-	a.ifcgSeq ,
-    b.ifcdOrder desc;
+
 
